@@ -118,7 +118,6 @@ class ContentBase(models.Model):
                 on_delete=models.CASCADE,
                 related_name='%(class)s_related',
                 verbose_name='Модуль',
-                null=True
             )
 
     class Meta:
@@ -168,7 +167,6 @@ class Question(ContentBase):
                 on_delete=models.CASCADE,
                 related_name='test_module_questions',
                 verbose_name='Тест модуль',
-                null=True,
             )
 
     class Meta:
