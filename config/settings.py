@@ -68,7 +68,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lms',
+        'NAME': 'stepik',
         'USER': 'postgres',
         'PASSWORD': '123',
         'HOST': 'localhost',

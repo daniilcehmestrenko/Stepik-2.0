@@ -58,10 +58,40 @@ class Course(models.Model):
         ordering = ['-created_date']
 
 
-class Module(models.Model):
+class TestModule(models.Model):
     name = models.CharField(
                 max_length=150,
                 verbose_name='Название'
+            )
+    slug = models.SlugField(
+                max_length=150
+            )
+
+    description = models.TextField(
+                verbose_name='Описание'
+            )
+    course = models.ForeignKey(
+                'Course',
+                on_delete=models.CASCADE,
+                related_name='course_test_modules',
+                verbose_name='Курс'
+            )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Тест модуль'
+        verbose_name_plural = 'Тест модули'
+
+
+class ContentModule(models.Model):
+    name = models.CharField(
+                max_length=150,
+                verbose_name='Название'
+            )
+    slug = models.SlugField(
+                max_length=150
             )
     description = models.TextField(
                 verbose_name='Описание'
@@ -69,24 +99,26 @@ class Module(models.Model):
     course = models.ForeignKey(
                 'Course',
                 on_delete=models.CASCADE,
-                related_name='course_modules',
+                related_name='course_content_modules',
                 verbose_name='Курс'
             )
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Контент модуль'
+        verbose_name_plural = 'Контент модули'
+        ordering = ['course']
+
 
 class ContentBase(models.Model):
-    name = models.CharField(
-                max_length=150,
-                verbose_name='Название'
-            )
-    module = models.ForeignKey(
-                'Module',
+    content_module = models.ForeignKey(
+                'ContentModule',
                 on_delete=models.CASCADE,
                 related_name='%(class)s_related',
-                verbose_name='Модуль'
+                verbose_name='Модуль',
+                null=True
             )
 
     class Meta:
@@ -98,9 +130,6 @@ class Text(ContentBase):
                 verbose_name='Текст'
             )
 
-    def __str__(self):
-        return self. name
-
     class Meta:
         verbose_name = 'Текст'
         verbose_name_plural = 'Тексты'
@@ -110,9 +139,6 @@ class Video(ContentBase):
     url = models.URLField(
                 verbose_name='Ссылка'
             )
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         verbose_name = 'Видео'
@@ -124,9 +150,6 @@ class Image(ContentBase):
                 upload_to='images',
                 verbose_name='Изображение'
             )
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         verbose_name = 'Изображение'
@@ -140,9 +163,13 @@ class Question(ContentBase):
     correct_answer = models.TextField(
                 verbose_name='Правильный ответ'
             )
-
-    def __str__(self):
-        return self.name
+    test_module = models.ForeignKey(
+                'TestModule',
+                on_delete=models.CASCADE,
+                related_name='test_module_questions',
+                verbose_name='Тест модуль',
+                null=True,
+            )
 
     class Meta:
         verbose_name = 'Вопрос'

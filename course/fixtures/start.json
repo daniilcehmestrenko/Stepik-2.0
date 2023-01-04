@@ -1,0 +1,73 @@
+[
+{
+  "model": "course.subject",
+  "pk": 1,
+  "fields": {
+    "name": "Математика",
+    "slug": "matematika"
+  }
+},
+{
+  "model": "course.subject",
+  "pk": 2,
+  "fields": {
+    "name": "Физика",
+    "slug": "fizika"
+  }
+},
+{
+  "model": "course.subject",
+  "pk": 3,
+  "fields": {
+    "name": "Биология",
+    "slug": "biologiya"
+  }
+},
+{
+  "model": "course.subject",
+  "pk": 4,
+  "fields": {
+    "name": "Программирование",
+    "slug": "programmirovanie"
+  }
+},
+{
+  "model": "course.course",
+  "pk": 1,
+  "fields": {
+    "name": "Python для профессионалов",
+    "slug": "python-dlya-professionalov",
+    "description": "В этом курсе вы познакомитесь с языком программирования Python.",
+    "created_date": "2023-01-04",
+    "owner": 1,
+    "subject": 4
+  }
+},
+{
+  "model": "course.module",
+  "pk": 1,
+  "fields": {
+    "name": "Типы данных",
+    "description": "В этом модуле вы познакомитесь с типами данных в Python.",
+    "course": 1
+  }
+},
+{
+  "model": "course.text",
+  "pk": 1,
+  "fields": {
+    "name": "Типы данных",
+    "module": 1,
+    "text": "В Python есть несколько стандартных типов данных:\r\n\r\n    Numbers (числа)\r\n\r\n    Strings (строки)\r\n\r\n    Lists (списки)\r\n\r\n    Dictionaries (словари)\r\n\r\n    Tuples (кортежи)\r\n\r\n    Sets (множества)\r\n\r\n    Boolean (логический тип данных)\r\n\r\nЭти типы данных можно, в свою очередь, классифицировать по нескольким признакам:\r\n\r\n    изменяемые (списки, словари и множества)\r\n\r\n    неизменяемые (числа, строки и кортежи)\r\n\r\n    упорядоченные (списки, кортежи, строки и словари)\r\n\r\n    неупорядоченные (множества)"
+  }
+},
+{
+  "model": "course.image",
+  "pk": 1,
+  "fields": {
+    "name": "Типы данных",
+    "module": 1,
+    "image": "images/scale_1200.webp"
+  }
+}
+]

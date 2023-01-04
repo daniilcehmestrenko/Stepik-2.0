@@ -1,28 +1,39 @@
 from django.contrib import admin
 
-from .models import Course, Module, Subject, Image, Question, Text, Video
+from .models import (Course, ContentModule, Subject, Image,
+                     Question, TestModule, Text, Video)
 
 
 class ImageInLine(admin.StackedInline):
     model = Image
+    extra = 1
 
 
 class TextInLine(admin.StackedInline):
     model = Text
+    extra = 1
 
 
 class VideoInLine(admin.StackedInline):
     model = Video
-
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'module']
+    extra = 1
 
 
-@admin.register(Module)
-class ModuleAdmin(admin.ModelAdmin):
+class QuestionInLine(admin.StackedInline):
+    model = Question
+
+@admin.register(TestModule)
+class TestModuleAdmin(admin.ModelAdmin):
+    list_display = ['name', 'course']
+    inlines = (QuestionInLine,)
+    prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(ContentModule)
+class ContentModuleAdmin(admin.ModelAdmin):
     list_display = ['name', 'course']
     inlines = (ImageInLine, TextInLine, VideoInLine)
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Subject)
