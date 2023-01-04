@@ -1,5 +1,3 @@
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -79,20 +77,74 @@ class Module(models.Model):
         return self.name
 
 
-class Content(models.Model):
+class ContentBase(models.Model):
+    name = models.CharField(
+                max_length=150,
+                verbose_name='Название'
+            )
     module = models.ForeignKey(
                 'Module',
                 on_delete=models.CASCADE,
-                related_name='module_contents',
+                related_name='%(class)s_related',
                 verbose_name='Модуль'
             )
-    objects_id = models.PositiveIntegerField()
-    content_type = models.ForeignKey(
-                ContentType,
-                on_delete=models.CASCADE
+
+    class Meta:
+        abstract = True
+
+
+class Text(ContentBase):
+    text = models.TextField(
+                verbose_name='Текст'
             )
-    item = GenericForeignKey(
-                'content_type',
-                'objects_id'
+
+    def __str__(self):
+        return self. name
+
+    class Meta:
+        verbose_name = 'Текст'
+        verbose_name_plural = 'Тексты'
+
+
+class Video(ContentBase):
+    url = models.URLField(
+                verbose_name='Ссылка'
             )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Видео'
+        verbose_name_plural = 'Видео'
+
+
+class Image(ContentBase):
+    image = models.ImageField(
+                upload_to='images',
+                verbose_name='Изображение'
+            )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Изображения'
+
+
+class Question(ContentBase):
+    title = models.TextField(
+                verbose_name='Вопрос'
+            )
+    correct_answer = models.TextField(
+                verbose_name='Правильный ответ'
+            )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
 
